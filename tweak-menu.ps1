@@ -199,13 +199,14 @@ function Install-Programs {
         Invoke-WebRequest -Uri $scriptUrl -OutFile $tempScript
         . $tempScript  
 
-        Show-AppsMenu 
+        Show-AppsMenu  =
     } catch {
         Write-Host "❌ Ошибка при загрузке скрипта: $scriptUrl" -ForegroundColor Red
     }
 
-    Show-TweaksMenu
+    Show-MainMenu 
 }
+
 
 
 
