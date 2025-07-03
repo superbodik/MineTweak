@@ -204,7 +204,7 @@ function Install-Programs {
         Write-Host "❌ Ошибка при загрузке скрипта: $scriptUrl" -ForegroundColor Red
     }
 
-    Show-MainMenu 
+    Show-AppsMenu 
 }
 
 
