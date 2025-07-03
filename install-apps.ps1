@@ -74,7 +74,7 @@ function Install-All {
 }
 
 do {
-    Show-Menu
+    Show-AppsMenu
     $choice = Read-Host "Выберите пункт меню (0-7)"
     switch ($choice) {
         '1' { Install-7Zip }
