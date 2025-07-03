@@ -66,7 +66,6 @@ function Install-Spicetify {
     if (-not (Get-Command spicetify -ErrorAction SilentlyContinue)) {
         Write-Host "📥 Spicetify не найден. Устанавливаю..." -ForegroundColor Yellow
 
-        # Скачиваем и запускаем официальный скрипт
         $installScript = "$env:TEMP\spicetify-install.ps1"
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/spicetify/spicetify-cli/main/install.ps1" -OutFile $installScript
         powershell -ExecutionPolicy Bypass -File $installScript
@@ -191,26 +190,23 @@ function Invoke-RemoteScript {
 
 function Install-Programs {
     Clear-Host
-    Write-Host "📦 Загружаю установщик программ..." -ForegroundColor Cyan
+    Write-Host "📦 Загружаю меню установки программ..." -ForegroundColor Cyan
 
     $scriptUrl = "https://raw.githubusercontent.com/superbodik/MineTweak/main/install-apps.ps1"
-    
+    $tempScript = "$env:TEMP\install-apps.ps1"
+
     try {
-        $tempScript = "$env:TEMP\remote-app-installer.ps1"
         Invoke-WebRequest -Uri $scriptUrl -OutFile $tempScript
+        . $tempScript  
 
-        . $tempScript 
-
-        Install-All
-
-        Remove-Item $tempScript -Force
+        Show-AppsMenu 
     } catch {
         Write-Host "❌ Ошибка при загрузке скрипта: $scriptUrl" -ForegroundColor Red
     }
 
-    Pause
-    Show-Menu
+    Show-TweaksMenu
 }
+
 
 
 Show-MainMenu

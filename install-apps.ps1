@@ -1,17 +1,30 @@
-﻿# install-apps.ps1
+﻿function Show-AppsMenu {
+    while ($true) {
+        Clear-Host
+        Write-Host "====== УСТАНОВКА ПОЛЕЗНЫХ ПРОГРАММ ======" -ForegroundColor Cyan
+        Write-Host "1. Установить 7-Zip"
+        Write-Host "2. Установить Notepad++"
+        Write-Host "3. Установить Visual Studio Code"
+        Write-Host "4. Установить Spotify"
+        Write-Host "5. Установить Spicetify (если Spotify уже установлен)"
+        Write-Host "6. Активация Windows (MAS)"
+        Write-Host "7. Установить всё"
+        Write-Host "0. Назад"
 
-function Show-Menu {
-    Clear-Host
-    Write-Host "====== УСТАНОВКА ПОЛЕЗНЫХ ПРОГРАММ ======" -ForegroundColor Cyan
-    Write-Host "1. Установить 7-Zip"
-    Write-Host "2. Установить Notepad++"
-    Write-Host "3. Установить Visual Studio Code"
-    Write-Host "4. Установить Spotify"
-    Write-Host "5. Установить Spicetify (если Spotify уже установлен)"
-    Write-Host "6. Активация Windows (MAS)"
-    Write-Host "7. Установить всё"
-    Write-Host "0. Выход"
-    Write-Host ""
+        $choice = Read-Host "Выберите пункт меню (0-7)"
+        switch ($choice) {
+            '1' { Install-7Zip }
+            '2' { Install-NotepadPP }
+            '3' { Install-VSCode }
+            '4' { Install-Spotify }
+            '5' { Install-Spicetify }
+            '6' { Run-MAS }
+            '7' { Install-All }
+            '0' { return }  
+            default { Write-Host "Неверный выбор. Попробуйте ещё раз." -ForegroundColor Red }
+        }
+        Pause
+    }
 }
 
 function Download-And-Install($url, $installerPath) {
