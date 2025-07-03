@@ -90,7 +90,7 @@ do {
         '5' { Install-Spicetify }
         '6' { Run-MAS }
         '7' { Install-All }
-        '0' { break }
+        '0' { Show-MainMenu }
         default { Write-Host "Неверный выбор. Попробуйте ещё раз." -ForegroundColor Red }
     }
     Pause

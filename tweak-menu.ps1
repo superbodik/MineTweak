@@ -63,7 +63,6 @@ function Install-Spicetify {
     Clear-Host
     Write-Host "🔧 Проверка Spicetify..." -ForegroundColor Cyan
 
-    # Проверка, установлен ли Spicetify
     if (-not (Get-Command spicetify -ErrorAction SilentlyContinue)) {
         Write-Host "📥 Spicetify не найден. Устанавливаю..." -ForegroundColor Yellow
 
@@ -75,7 +74,6 @@ function Install-Spicetify {
         Write-Host "✅ Spicetify уже установлен." -ForegroundColor Green
     }
 
-    # Применение патча
     try {
         spicetify backup apply
         Write-Host "🎵 Spicetify настроен." -ForegroundColor Green
@@ -175,12 +173,44 @@ function Activate-Windows {
     Show-PatchMenu
 }
 
-function Install-Programs {
-    Write-Host "📦 Здесь можно добавить установку программ вручную." -ForegroundColor Cyan
-    Pause
-    Show-TweaksMenu
+
+function Invoke-RemoteScript {
+    param (
+        [Parameter(Mandatory)]
+        [string]$Url
+    )
+
+    try {
+        $scriptContent = Invoke-RestMethod -Uri $Url
+        Invoke-Expression $scriptContent
+    } catch {
+        Write-Host "❌ Ошибка при загрузке скрипта: $Url" -ForegroundColor Red
+        Pause
+    }
 }
 
+function Install-Programs {
+    Clear-Host
+    Write-Host "📦 Загружаю установщик программ..." -ForegroundColor Cyan
+
+    $scriptUrl = "https://raw.githubusercontent.com/superbodik/MineTweak/main/install-apps.ps1"
+    
+    try {
+        $tempScript = "$env:TEMP\remote-app-installer.ps1"
+        Invoke-WebRequest -Uri $scriptUrl -OutFile $tempScript
+
+        . $tempScript 
+
+        Install-All
+
+        Remove-Item $tempScript -Force
+    } catch {
+        Write-Host "❌ Ошибка при загрузке скрипта: $scriptUrl" -ForegroundColor Red
+    }
+
+    Pause
+    Show-Menu
+}
 
 
 Show-MainMenu
