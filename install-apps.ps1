@@ -160,7 +160,7 @@ function Show-AppsMenu {
             '8' { Install-Git }
             '9' { Install-Spicetify }
             '10' { Run-MAS }
-            '0' { return }  # Выход из меню назад
+            '0' { Show-MainMenu }  # Выход из меню назад
             default { Write-Host "Неверный выбор. Попробуйте ещё раз." -ForegroundColor Red }
         }
         Pause
